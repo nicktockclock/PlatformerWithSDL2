@@ -13,7 +13,7 @@ class Graphics;
 class Player: public AnimatedSprite{
     public:
         Player();
-        Player(Graphics &graphics, float x, float y);
+        Player(Graphics &graphics, Vector2 spawnPoint);
         void draw(Graphics &Graphics);
         void update(float elapsedTime);
 
@@ -35,10 +35,20 @@ class Player: public AnimatedSprite{
         virtual void animationDone(std::string currentAnimation);
         virtual void setupAnimations();
 
+        /* void handleTileCollisions
+        * Handles collisions with any tiles the player is standing on
+        */
+        void handleTileCollisions(std::vector<Rectangle> &others);
+
+        const float getX() const;
+        const float getY() const;
+
     private:
-        float _dx, dy;
+        float _dx, _dy;
 
         Direction _facing;
+        //True if standing on the ground
+        bool _grounded;
 };
 
 #endif

@@ -5,6 +5,7 @@
 #include <string>
 #include <tile.h>
 #include <vector>
+#include <rectangle.h>
 
 class Graphics;
 struct SDL_Texture;
@@ -19,6 +20,12 @@ class Level{
         void update(int elapsedTime);
         void draw(Graphics &graphics);
 
+        //std::vector<Rectangle> checkTileCollisions
+        //Go through tiles and find any that are colliding with the given rectangle
+        std::vector<Rectangle> checkTileCollisions(const Rectangle &other);
+
+        const Vector2 getPlayerSpawnPoint() const;
+
     private:
         std::string _mapName;
         Vector2 _spawnPoint;
@@ -29,6 +36,7 @@ class Level{
 
         std::vector<Tile> _tilelist;
         std::vector<Tileset> _tilesets;
+        std::vector<Rectangle> _collisionRects;
 
 
         /* void loadMap

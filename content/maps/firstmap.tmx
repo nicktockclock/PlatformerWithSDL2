@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="20" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="3" nextobjectid="1">
+<map version="1.4" tiledversion="1.4.2" orientation="orthogonal" renderorder="right-down" width="20" height="16" tilewidth="16" tileheight="16" infinite="0" nextlayerid="5" nextobjectid="17">
  <tileset firstgid="1" name="gothic" tilewidth="16" tileheight="16" tilecount="294" columns="21">
   <image source="../tilesets/tileset.png" width="336" height="224"/>
  </tileset>
@@ -574,8 +574,8 @@
    <tile gid="219"/>
    <tile gid="220"/>
    <tile gid="221"/>
-   <tile gid="219"/>
-   <tile gid="220"/>
+   <tile gid="223"/>
+   <tile gid="224"/>
    <tile gid="113"/>
    <tile gid="114"/>
    <tile gid="220"/>
@@ -651,4 +651,18 @@
    <tile/>
   </data>
  </layer>
+ <objectgroup id="3" name="Collisions">
+  <object id="5" x="241.284" y="155.963" width="77.9817" height="98.6239"/>
+  <object id="8" x="208.716" y="202.752" width="32.1101" height="52.7523"/>
+  <object id="9" x="177.523" y="173.853" width="29.8165" height="81.6514"/>
+  <object id="10" x="144.495" y="201.376" width="31.1927" height="52.2936"/>
+  <object id="11" x="114.22" y="189.45" width="28.4404" height="64.2202"/>
+  <object id="12" x="0.917431" y="200.917" width="111.468" height="53.211"/>
+  <object id="13" x="-14.6789" y="110.092"/>
+ </objectgroup>
+ <objectgroup id="4" name="SpawnPoints">
+  <object id="15" name="Player" x="194.954" y="158.257" width="3.21101" height="3.66972">
+   <ellipse/>
+  </object>
+ </objectgroup>
 </map>

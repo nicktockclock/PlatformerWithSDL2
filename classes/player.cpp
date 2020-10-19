@@ -4,12 +4,19 @@
 
 namespace player_constants{
     const float WALK_SPEED = 0.2f;
+
+    const float GRAVITY = 0.0002f;
+    const float GRAVITY_CAP = 0.8f;
 }
 
 Player::Player() {}
 
-Player::Player(Graphics &graphics, float x, float y):
-    AnimatedSprite(graphics, "content/sprites/herochar_spritesheet.png", 0, 64, 16, 16, x, y, 100)
+Player::Player(Graphics &graphics, Vector2 spawnPoint):
+    AnimatedSprite(graphics, "content/sprites/herochar_spritesheet.png", 0, 64, 16, 16, spawnPoint.x, spawnPoint.y, 100),
+    _dx(0),
+    _dy(0),
+    _facing(RIGHT),
+    _grounded(false)
 {
     graphics.loadImage("content/sprites/herochar_spritesheet.png");
     setupAnimations();
@@ -28,10 +35,24 @@ void Player::animationDone(std::string currentAnimation){
 
 }
 
+const float Player::getX() const{
+    return _x;
+}
+
+const float Player::getY() const{
+    return _y;
+}
+
 void Player::update(float elapsedTime){
+    //Apply gravity
+    if (_dy <= player_constants::GRAVITY_CAP){
+        _dy += player_constants::GRAVITY * elapsedTime;
+    }
+
     //Move by dx
     _x += _dx * elapsedTime;
-    
+    //Move by _dy
+    _y+= _dy * elapsedTime;
     AnimatedSprite::update(elapsedTime);
 }
 
@@ -54,5 +75,30 @@ void Player::moveRight(){
 void Player::stopMoving(){
     _dx = 0.0f;
     playAnimation(_facing==RIGHT ? "idleRight" : "idleLeft");
+}
+
+void Player::handleTileCollisions(std::vector<Rectangle> &others){
+    //Figure out what side the collision is on and move the player out
+    for (int i = 0; i < others.size(); i++){
+        sides::Side collisionSide = Sprite::getCollisionSide(others.at(i));
+        if (collisionSide != sides::NONE){
+            switch (collisionSide){
+                case sides::TOP:
+                    _y = others.at(i).getBottom() +1;
+                    _dy = 0;
+                    break;
+                case sides::BOTTOM:
+                    _y = others.at(i).getTop() - _boundingBox.getHeight() -1;
+                    _dy = 0;
+                    break;
+                case sides::LEFT:
+                    _x = others.at(i).getRight() +1;
+                    break;
+                case sides::RIGHT:
+                    _x = others.at(i).getLeft() - _boundingBox.getWidth() -1;
+                    break;
+            }
+        }
+    }
 }
 
