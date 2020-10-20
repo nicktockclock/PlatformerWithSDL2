@@ -1,7 +1,7 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 
-#include <animatedsprite.h>
+#include "animatedsprite.h"
 #include <string>
 
 class Graphics;
@@ -32,6 +32,21 @@ class Player: public AnimatedSprite{
         */
         void stopMoving();
 
+        /* void jump
+        * Handles jumping
+        */
+        void jump();
+
+        /* void jetpackMovement
+        * Handles jetpack movement
+        */
+        void jetpackMovement(Direction direction);
+
+        /* void turnOffJetpack
+        * Turn off the players jetpack
+        */
+        void turnOffJetpack();
+
         virtual void animationDone(std::string currentAnimation);
         virtual void setupAnimations();
 
@@ -40,8 +55,15 @@ class Player: public AnimatedSprite{
         */
         void handleTileCollisions(std::vector<Rectangle> &others);
 
+        /* void handleSlopeCollisions
+        * Handles collisions with any slopes the player is standing on
+        */
+        void handleSlopeCollisions(std::vector<Slope> &others);
+
         const float getX() const;
         const float getY() const;
+        const bool isJumping() const;
+        const bool jetpackOn() const;
 
     private:
         float _dx, _dy;
@@ -49,6 +71,8 @@ class Player: public AnimatedSprite{
         Direction _facing;
         //True if standing on the ground
         bool _grounded;
+        bool _jetpack;
+        bool _jumping;
 };
 
 #endif

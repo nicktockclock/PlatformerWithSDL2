@@ -1,5 +1,5 @@
 CXX		  := clang++
-CXX_FLAGS := -lSDL2 -lSDL2_Image -Wall -Wextra -std=c++17 -g
+CXX_FLAGS := -lSDL2 -lSDL2_Image -std=c++17 -g
 
 BIN		:= bin
 SRC		:= src
@@ -8,7 +8,7 @@ INCLUDE	:= headers
 LIB		:= lib
 
 LIBRARIES	:=
-EXECUTABLE	:= main
+EXECUTABLE	:= main.exe
 
 
 all: $(BIN)/$(EXECUTABLE)

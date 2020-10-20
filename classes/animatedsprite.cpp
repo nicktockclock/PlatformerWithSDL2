@@ -1,5 +1,5 @@
-#include <animatedsprite.h>
-#include <graphics.h>
+#include "animatedsprite.h"
+#include "graphics.h"
 #include <iostream>
 #include <algorithm>
 

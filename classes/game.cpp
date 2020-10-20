@@ -1,6 +1,6 @@
-#include <game.h>
-#include <graphics.h>
-#include <input.h>
+#include "game.h"
+#include "graphics.h"
+#include "input.h"
 #include <SDL2/SDL.h>
 #include <iostream>
 
@@ -15,7 +15,7 @@ namespace{
 
 Game::Game(){
     SDL_Init(SDL_INIT_EVERYTHING);
-    this->gameLoop();
+
 }
 
 Game::~Game(){
@@ -50,15 +50,34 @@ void Game::gameLoop(){
             if (input.wasKeyPressed(SDL_SCANCODE_ESCAPE)){
                 return;
             }
-            else if (input.isKeyHeld(SDL_SCANCODE_A)){
+            else if (!_player.jetpackOn() && input.isKeyHeld(SDL_SCANCODE_A)){
                 _player.moveLeft();
             }
-            else if (input.isKeyHeld(SDL_SCANCODE_D)){
+            else if (!_player.jetpackOn() && input.isKeyHeld(SDL_SCANCODE_D)){
                 _player.moveRight();
             }
 
+            if (_player.jetpackOn() && input.isKeyHeld(SDL_SCANCODE_SPACE)){
+                _player.jetpackMovement(LEFT);
+            }
+
+            if (input.wasKeyPressed(SDL_SCANCODE_SPACE) == true){
+                if (_player.isJumping()){
+                    _player.jetpackMovement(LEFT);
+                }
+                else{
+                    _player.jump();
+                }
+            }
+            
+            
+
             if (!input.isKeyHeld(SDL_SCANCODE_A) && !input.isKeyHeld(SDL_SCANCODE_D)){
                 _player.stopMoving();
+            }
+
+            if (!input.isKeyHeld(SDL_SCANCODE_SPACE)){
+                _player.turnOffJetpack();
             }
         }
 
@@ -89,5 +108,10 @@ void Game::update(float elapsedTime){
     if ((others = _level.checkTileCollisions(_player.getBoundingBox())).size() > 0){
         //The player has collided with at least one tile
         _player.handleTileCollisions(others);
+    }
+    std::vector<Slope> otherSlopes;
+    if ((otherSlopes = _level.checkSlopeCollisions(_player.getBoundingBox())).size() > 0){
+        //The player has collided with at least one tile
+        _player.handleSlopeCollisions(otherSlopes);
     }
 }

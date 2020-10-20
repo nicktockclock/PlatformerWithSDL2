@@ -1,4 +1,4 @@
-#include <input.h>
+#include "input.h"
 
 /* Input class
 * Handles all of the user input for the game

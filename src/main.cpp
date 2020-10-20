@@ -1,3 +1,4 @@
+
 #include <iostream>
 #include "game.h"
 #include <SDL2/SDL.h>
@@ -8,7 +9,8 @@
 
 
 int main(int argc, char *argv[]) {
-    std::cout << "Hello Easy C++ project!" << std::endl;
+    //std::cout << "Hello Easy C++ project!" << std::endl;
     Game game;
+    game.gameLoop();
     return 0;
 }

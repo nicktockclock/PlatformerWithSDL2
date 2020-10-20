@@ -1,12 +1,13 @@
-#include <level.h>
-#include <graphics.h>
+#include "level.h"
+#include "graphics.h"
 #include <SDL2/SDL.h>
-#include <globals.h>
+#include "globals.h"
 #include <tinyxml2.h>
 #include <sstream>
 #include <algorithm>
 #include <cmath>
 #include <iostream>
+#include <utils.h>
 
 using namespace tinyxml2;
 
@@ -33,6 +34,7 @@ void Level::loadMap(std::string mapName, Graphics &graphics){
 
     //Get the width and height of the map and store it in _size;
     int width, height;
+    std::string str = "width";
     mapNode->QueryIntAttribute("width", &width);
     mapNode->QueryIntAttribute("height", &height);
     _size = Vector2(width, height);
@@ -178,6 +180,44 @@ void Level::loadMap(std::string mapName, Graphics &graphics){
                 }
             }
             //Other objectgroups go here with an else if
+            else if (ss.str() == "Slopes"){
+                XMLElement* pObject = pObjectGroup->FirstChildElement("object");
+                if (pObject != NULL){
+                    while (pObject){
+                        std::vector<Vector2> points;
+                        Vector2 p1;
+                        p1 = Vector2(std::ceil(pObject->FloatAttribute("x")), std::ceil(pObject->FloatAttribute("y")));
+
+                        XMLElement* pPolyline = pObject->FirstChildElement("polyline");
+                        if (pPolyline != NULL){
+                            std::vector<std::string> pairs;
+                            const char* pointString = pPolyline->Attribute("points");
+
+                            std::stringstream ss;
+                            ss << pointString;
+                            Utils::split(ss.str(), pairs, ' ');
+                            //We now have each pair in the points string
+                            //Which we can loop through and convert to Vector2s and store in our points Vector
+                            for (int i = 0; i < pairs.size(); i++){
+                                std::vector<std::string> ps;
+                                Utils::split(pairs.at(i), ps, ',');
+                                points.push_back(Vector2(std::stoi(ps.at(0)), std::stoi(ps.at(1))));
+                            }
+                        }
+                        
+                        //Now to turn the points into slopes
+                        for (int i = 0; i < points.size()-1; i++){
+                            _slopes.push_back(Slope(
+                                Vector2((p1.x + points.at(i).x) * globals::SPRITE_SCALE, 
+                                        (p1.y + points.at(i).y) * globals::SPRITE_SCALE), 
+                                Vector2((p1.x + points.at(i+1).x) * globals::SPRITE_SCALE, 
+                                        (p1.y + points.at(i+1).y) * globals::SPRITE_SCALE)));
+                        }
+                        
+                        pObject = pObject->NextSiblingElement("object");
+                    }
+                }
+            }
             else if (ss.str() == "SpawnPoints"){
                 XMLElement* pObject = pObjectGroup->FirstChildElement("object");
                 if (pObject != NULL){
@@ -217,6 +257,16 @@ std::vector<Rectangle> Level::checkTileCollisions(const Rectangle &other){
     for (int i = 0; i < _collisionRects.size(); i++){
         if (_collisionRects.at(i).collidesWith(other)){
             others.push_back(_collisionRects.at(i));
+        }
+    }
+    return others;
+}
+
+std::vector<Slope> Level::checkSlopeCollisions(const Rectangle &other){
+    std::vector<Slope> others;
+    for (int i = 0; i < _slopes.size(); i++){
+        if (_slopes.at(i).collidesWith(other)){
+            others.push_back(_slopes.at(i));
         }
     }
     return others;

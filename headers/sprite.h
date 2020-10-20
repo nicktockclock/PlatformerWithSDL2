@@ -7,9 +7,10 @@
 
 #include <string>
 #include <SDL2/SDL.h>
-#include <graphics.h>
-#include <rectangle.h>
-#include <globals.h>
+#include "graphics.h"
+#include "rectangle.h"
+#include "slope.h"
+#include "globals.h"
 
 class Sprite{
     public:

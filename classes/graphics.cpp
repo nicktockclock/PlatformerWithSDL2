@@ -1,5 +1,5 @@
-#include <graphics.h>
-#include <globals.h>
+#include "graphics.h"
+#include "globals.h"
 #include <SDL2/SDL.h>
 #include <SDL2/SDL_image.h>
 #include <iostream>

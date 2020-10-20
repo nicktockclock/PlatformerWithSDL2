@@ -1,8 +1,8 @@
 #ifndef ANIMATED_SPRITE_H
 #define ANIMATED_SPRITE_H
 
-#include <sprite.h>
-#include <globals.h>
+#include "sprite.h"
+#include "globals.h"
 #include <map>
 #include <string>
 #include <vector>
