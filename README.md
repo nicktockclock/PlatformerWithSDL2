@@ -7,4 +7,7 @@ The idea of the video series is to recreate Cave Story using C++ and SDL2. I've 
 
 It's been pretty fun learning about how to animate sprites using C++ and create maps using Tiled and other resources.
 
-If you build and run it within Visual Studio it should run fine, there's a makefile included.
+If you build and run it within Visual Studio it should run fine, but I've included a gif of my current progress below which I'll try to keep updated. Currently working on giving the character a "jetpack" that lets them fly for a certain amount of time.
+
+
+![Platformer Demo](demo/Platformer.gif)
