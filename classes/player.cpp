@@ -114,11 +114,34 @@ void Player::jump(){
 }
 
 void Player::jetpackMovement(Direction direction){
-    _dx = -player_constants::JETPACK_SPEED;
-    _dy = 0;
-    playAnimation("runLeft");
-    _facing = LEFT;
-    _jetpack = true;
+    if (direction==LEFT){
+        _dx = -player_constants::JETPACK_SPEED;
+        _dy = 0;
+        playAnimation("runLeft");
+        _facing = LEFT;
+        _jetpack = true;
+    }
+    else if (direction==RIGHT){
+        _dx = player_constants::JETPACK_SPEED;
+        _dy = 0;
+        playAnimation("runRight");
+        _facing = RIGHT;
+        _jetpack = true;
+    }
+    else if (direction==UP){
+        _dx = 0;
+        _dy = -player_constants::JETPACK_SPEED;
+        playAnimation("idleRight");
+        _facing = RIGHT;
+        _jetpack = true;
+    }
+    else if (direction==DOWN){
+        _dx = 0;
+        _dy = player_constants::JETPACK_SPEED;
+        playAnimation("ifleRight");
+        _facing = RIGHT;
+        _jetpack = true;
+    }
 }
 
 void Player::handleTileCollisions(std::vector<Rectangle> &others){

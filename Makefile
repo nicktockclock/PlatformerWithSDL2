@@ -7,8 +7,8 @@ CLASSES := classes
 INCLUDE	:= headers
 LIB		:= lib
 
-LIBRARIES	:=
-EXECUTABLE	:= main.exe
+LIBRARIES	:= 
+EXECUTABLE	:= main
 
 
 all: $(BIN)/$(EXECUTABLE)

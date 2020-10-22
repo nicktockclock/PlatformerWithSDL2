@@ -58,12 +58,40 @@ void Game::gameLoop(){
             }
 
             if (_player.jetpackOn() && input.isKeyHeld(SDL_SCANCODE_SPACE)){
-                _player.jetpackMovement(LEFT);
+                if (input.isKeyHeld(SDL_SCANCODE_A)){
+                        _player.jetpackMovement(LEFT);
+                    }
+                    else if (input.isKeyHeld(SDL_SCANCODE_D)){
+                        _player.jetpackMovement(RIGHT);
+                    }
+                    else if (input.isKeyHeld(SDL_SCANCODE_W)){
+                        _player.jetpackMovement(UP);
+                    }
+                    else if (input.isKeyHeld(SDL_SCANCODE_S)){
+                        _player.jetpackMovement(DOWN);
+                    }
+                    else{
+                        _player.jetpackMovement(UP);
+                    }
             }
 
             if (input.wasKeyPressed(SDL_SCANCODE_SPACE) == true){
                 if (_player.isJumping()){
-                    _player.jetpackMovement(LEFT);
+                    if (input.isKeyHeld(SDL_SCANCODE_A)){
+                        _player.jetpackMovement(LEFT);
+                    }
+                    else if (input.isKeyHeld(SDL_SCANCODE_D)){
+                        _player.jetpackMovement(RIGHT);
+                    }
+                    else if (input.isKeyHeld(SDL_SCANCODE_W)){
+                        _player.jetpackMovement(UP);
+                    }
+                    else if (input.isKeyHeld(SDL_SCANCODE_S)){
+                        _player.jetpackMovement(DOWN);
+                    }
+                    else{
+                        _player.jetpackMovement(UP);
+                    }
                 }
                 else{
                     _player.jump();
